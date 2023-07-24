@@ -122,35 +122,8 @@ test_labels = test['Code']
 print(test_labels)
 
 
-#LOAD WORDEMBEDDING
+#LOAD WORDEMBEDDINGS
 import gensim
-#google_300 = gensim.models.KeyedVectors.load_word2vec_format("cc.es.300.vec")
-
-# create a weight matrix for words in training docs
-#count = 0
-#embedding_matrix = np.zeros((vocab_size, 300))
-#for word, i in t.word_index.items():
-#    try:
-#        embedding_vector = google_300.word_vec(word)
-#    except:
-#        #keep a random embedidng
-#        count = count+1
-#        max = len(google_300.vocab.keys()) - 1
-#        index = random.randint(0, max)
-#        word = google_300.index2word[index]
-#        embedding_vector = google_300.word_vec(word)
-
-#    if embedding_vector is not None:
-#        embedding_matrix[i] = embedding_vector
-
-#joblib.dump(embedding_matrix,'embedding_matrix.vec')
-#joblib.dump(padded_test,'padded_test.vec')
-#joblib.dump(test_labels,'test_labels.vec')
-
-#joblib.dump(padded_train,'padded_train.vec')
-#joblib.dump(encoded_train_labels,'encoded_train_labels.vec')
-
-#joblib.dump(le,'label_encoder_le.vec')
 
 embedding_matrix = joblib.load('embedding_matrix.vec')
 padded_test = joblib.load('padded_test.vec')
@@ -191,16 +164,6 @@ callbacks_list = [
 ]
 
 model.compile (loss='categorical_crossentropy' , optimizer='adam' , metrics=[ 'accuracy'] )
-#print(padded_train)
-#history = model.fit(padded_train,encoded_train_labels,128,50,
-#                      validation_split = 0.10,
-#                      callbacks=callbacks_list ,
-#                      verbose=1)
-#model.load_weights('LSTM_CNN_ATTENTION_28042020weights.00048-6.76415_0.2118.hdf5')
-#model.save('28042020model.h5')
-
-#res = model.predict(padded_test)
-#joblib.dump(res,'results_prediction.vec')
 
 res = joblib.load('results_prediction.vec')
 
@@ -224,6 +187,3 @@ print(res_encoded)
 
 print('Testing accuracy %s' % accuracy_score(test_labels, res_encoded))
 print('Testing F1 score: {}'.format(f1_score(test_labels, res_encoded, average='weighted')))
-
-#Testing accuracy 0.1836734693877551
-#Testing F1 score: 0.16066030988784247
